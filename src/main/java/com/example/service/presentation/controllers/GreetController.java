@@ -1,7 +1,7 @@
-package com.example.service.controllers;
+package com.example.service.presentation.controllers;
 
-import com.example.service.models.dtos.request.GreetRequest;
-import com.example.service.models.dtos.response.GreetResponse;
+import com.example.service.domain.models.dtos.request.GreetRequest;
+import com.example.service.domain.models.dtos.response.GreetResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

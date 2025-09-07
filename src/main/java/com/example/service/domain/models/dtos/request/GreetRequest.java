@@ -1,4 +1,4 @@
-package com.example.service.models.dtos.request;
+package com.example.service.domain.models.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 

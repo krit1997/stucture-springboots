@@ -1,4 +1,4 @@
-package com.example.service.models.dtos.response;
+package com.example.service.domain.models.dtos.response;
 
 import java.time.Instant;
 
