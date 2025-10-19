@@ -2,7 +2,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>th.co.cello.symc</groupId>
+
+    <!-- ตรงกับที่โมดูลลูกอ้างเป็น parent -->
+    <groupId>th.co.kp-shop.kp</groupId>
     <artifactId>kp-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -11,10 +13,13 @@
         <java.version>21</java.version>
         <spring-boot.version>3.3.4</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <!-- springdoc ไม่ได้อยู่ใน BOM ของ Spring Boot ต้องระบุเอง -->
+        <springdoc.version>2.6.0</springdoc.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Import BOMs -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -28,6 +33,23 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- จัดการเวอร์ชันของ "โมดูลภายใน" ทั้งหมด -->
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>common</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>core-domain</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>core-application</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-web</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-persistence-jpa</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-security-keycloak</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-clients</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>test-support</artifactId><version>${project.version}</version></dependency>
+
+            <!-- จัดเวอร์ชัน springdoc ให้ลูก ๆ ใช้โดยไม่ต้องใส่ซ้ำ -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
