@@ -1,88 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>service</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<properties>
-		<java.version>24</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.6.0</version>
-        </dependency>
-	</dependencies>
+    <!-- ตรงกับที่โมดูลลูกอ้างเป็น parent -->
+    <groupId>th.co.kp-shop.kp</groupId>
+    <artifactId>kp-service</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <properties>
+        <java.version>21</java.version>
+        <spring-boot.version>3.3.4</spring-boot.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <!-- springdoc ไม่ได้อยู่ใน BOM ของ Spring Boot ต้องระบุเอง -->
+        <springdoc.version>2.6.0</springdoc.version>
+    </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Import BOMs -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- จัดการเวอร์ชันของ "โมดูลภายใน" ทั้งหมด -->
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>common</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>core-domain</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>core-application</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-web</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-persistence-jpa</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-security-keycloak</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>adapters-clients</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>th.co.kp-shop.kp</groupId><artifactId>test-support</artifactId><version>${project.version}</version></dependency>
+
+            <!-- จัดเวอร์ชัน springdoc ให้ลูก ๆ ใช้โดยไม่ต้องใส่ซ้ำ -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>common</module>
+        <module>core-domain</module>
+        <module>core-application</module>
+        <module>adapters-web</module>
+        <module>adapters-persistence-jpa</module>
+        <module>adapters-security-keycloak</module>
+        <module>adapters-clients</module>
+        <module>test-support</module>
+        <module>bootstrap</module>
+    </modules>
 </project>
